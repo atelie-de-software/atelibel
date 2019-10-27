@@ -5590,6 +5590,11 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   dependencies:
     debounce "^1.2.0"
 
+react-native-sound-level@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-sound-level/-/react-native-sound-level-1.1.5.tgz#9b7e29ee1e0d16315fb8e9bc7a72015ac66c34a3"
+  integrity sha512-H4dVYbif/PfzMOp9IpNjJUtbODYXeHk8tI0d9mWcJcBEB/ITcP4jSvDtAOH8B/Vcu4h4Owrvsuz/Y+UfS0biuw==
+
 react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
