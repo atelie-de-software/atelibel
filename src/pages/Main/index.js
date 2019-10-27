@@ -5,13 +5,21 @@ import {View, Text, Vibration} from 'react-native';
 // import { Container } from './styles';
 
 export default function Atelibel() {
-  const [decibelPeace] = useState(-30);
-  const [decibel, setDecibel] = useState('');
+  const [rightDecibel] = useState(-30);
+  const [decibel, setDecibel] = useState();
+  const [vibrateDuration] = useState([1000, 2000, 3000]);
+
   useEffect(() => {
     RNSoundLevel.start();
     RNSoundLevel.onNewFrame = data => {
       setDecibel(data.value);
     };
+
+    if (decibel > rightDecibel) {
+      Vibration.vibrate(vibrateDuration);
+    } else {
+      Vibration.cancel();
+    }
     return () => {
       RNSoundLevel.stop();
     };
@@ -23,9 +31,9 @@ export default function Atelibel() {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: decibel > decibelPeace ? 'red' : 'yellow',
+        backgroundColor: decibel > rightDecibel ? 'red' : 'yellow',
       }}>
-      {decibel > decibelPeace && (
+      {decibel > rightDecibel && (
         <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold'}}>
           Danger!
         </Text>
