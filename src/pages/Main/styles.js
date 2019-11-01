@@ -4,5 +4,9 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: ${props => props.color};
+`;
+
+export const TextDecibel = styled.Text`
+  font-size: 40px;
+  color: ${props => props.color};
 `;

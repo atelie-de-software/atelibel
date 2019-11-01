@@ -1,16 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import RNSoundLevel from 'react-native-sound-level';
-import {Vibration} from 'react-native';
+import {Vibration, PermissionsAndroid} from 'react-native';
 
-import {Container} from './styles';
+import {Container, TextDecibel} from './styles';
 
 export default function Atelibel() {
   const [rightDecibel] = useState(-30);
   const [decibel, setDecibel] = useState();
   const [vibrateDuration] = useState([1000, 2000, 3000]);
 
+  async function requestAudioRecordPermission() {
+    try {
+      if (
+        PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
+      ) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+          {
+            title: 'Audio Record Permission',
+            message: 'App needs access to your microphone',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          RNSoundLevel.start();
+        } else {
+          console.log('Audio record permission denied');
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    RNSoundLevel.start();
+    requestAudioRecordPermission();
     RNSoundLevel.onNewFrame = data => {
       setDecibel(data.value);
     };
@@ -23,7 +46,13 @@ export default function Atelibel() {
     return () => {
       RNSoundLevel.stop();
     };
-  });
+  }, []);
 
-  return <Container color={decibel > rightDecibel ? 'red' : 'yellow'} />;
+  return (
+    <Container>
+      <TextDecibel color={decibel > rightDecibel ? 'red' : 'black'}>
+        {decibel}
+      </TextDecibel>
+    </Container>
+  );
 }
